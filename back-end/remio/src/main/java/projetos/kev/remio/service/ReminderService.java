@@ -7,6 +7,8 @@ import projetos.kev.remio.DTO.ReminderRequestDto;
 import projetos.kev.remio.model.entity.Reminder;
 import projetos.kev.remio.repository.ReminderRepository;
 
+import java.util.List;
+
 @Service
 public class ReminderService {
 
@@ -16,6 +18,11 @@ public class ReminderService {
     public void newReminder(ReminderRequestDto reminderRequestDto){
 
         reminderRepository.save(new Reminder(reminderRequestDto.description()));
+    }
+
+
+    public List<Reminder> reminderList(){
+        return reminderRepository.findAll();
     }
 
 
