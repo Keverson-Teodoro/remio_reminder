@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reminder")
+@CrossOrigin(origins = "*")
 public class ReminderController {
 
     @Autowired

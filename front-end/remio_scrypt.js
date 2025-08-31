@@ -1,34 +1,94 @@
 
+// function mostrar(){
+//     // const descri = document.getElementById("descricao").value;
+//     const value = "asdasdassad".value;
+
+    
+//     $("#descricao").val("");
+
+
+//     const novalinha = `
+//         <tr>
+//             <td> <button class="remover"></button> </td>
+//             <td> <input class="input-lembrete"> </input> </td>
+            
+//         </tr>
+
+//     `;
+
+
+//     ;
+
+
+
+//     $("#descricaoTable").append(novalinha);
+
+//     $(document).on("click", ".remover", function (){
+//         $(this).closest("tr").remove();
+//     });
+
+// }
+
+
 function mostrar(){
     // const descri = document.getElementById("descricao").value;
     const value = "asdasdassad".value;
 
     
-    $("#descricao").val("");
+        const url = "http://localhost:8080/reminder"
+    
+    // $("#descricao").val("");
 
 
-    const novalinha = `
-        <tr>
-            <td> <button class="remover"></button> </td>
-            <td> <input class="input-lembrete"> </input> </td>
+        try {
+        const resposta = fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "text/plain"
+            },
             
-        </tr>
+            
+        });
+        
+                    const novalinha = `
+                        <tr>
+                            <td> <button class="remover"></button> </td>
+                            <td> <input class="input-lembrete"> ${resposta} </input> </td>
+                        </tr>
+                
+                    `;
 
-    `;
+    
+        
+                    $("#descricaoTable").append(novalinha);
+                
+                    $(document).on("click", ".remover", function (){
+                        $(this).closest("tr").remove();
+                    });
+
+                    
+
+        if (!resposta.ok) {
+            throw new Error("Não foi possível retornar os dados");
+        }
+
+        const resultado = resposta.json();
+        console.log("Lembretes:", resultado);
+
+    } catch (erro) {
+        console.error("Erro:", erro);
+    }
+
+    
+
 
 
     ;
 
 
-
-    $("#descricaoTable").append(novalinha);
-
-    $(document).on("click", ".remover", function (){
-        $(this).closest("tr").remove();
-    });
-
 }
 
+window.onload = mostrar;
 
 function popUp(){
     const valor = window.prompt("digite algo");
@@ -64,6 +124,7 @@ function popUp(){
     
 
 }
+
 
 function cadastrar(){
 
