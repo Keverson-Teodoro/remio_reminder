@@ -37,8 +37,8 @@ public class ReminderController {
     }
 
 
-    @DeleteMapping
-    public void deleteRminder (String id){
+    @DeleteMapping("/{id}")
+    public void deleteRminder (@PathVariable("id") String id){
         reminderService.deleteReminder(id);
     }
 
