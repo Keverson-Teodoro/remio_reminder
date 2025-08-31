@@ -95,7 +95,7 @@ async function mostrar(){
         lista.forEach(element => {
             const novalinha = `
             <tr>
-                <td> <button class="remover"></button> </td>
+                <td> <button class="remover" onClick="removeReminder('${element.id}')"></button> </td>
                 <td><input class="input-lembrete" value="${element.description ?? ''}" /></td>
             </tr>
                 
@@ -104,9 +104,6 @@ async function mostrar(){
         $("#descricaoTable").append(novalinha);
     });
     
-    $(document).on("click", ".remover", function (){
-        $(this).closest("tr").remove();
-    });
 
 
     } catch (erro) {
@@ -119,46 +116,41 @@ async function mostrar(){
 window.onload = mostrar;
 
 
-function removeReminder(){
+async function removeReminder(id){
 
-}
+    const url = `http://localhost:8080/reminder/${id}`;
 
-function popUp(){
-    const valor = window.prompt("digite algo");
-
-
-
-    // const endpoint = "http://127.0.1.1:8080/usuarios/to-do-by-descricao";
-
-    // const descricao = fetch(endpoint, {
-    //     method: "GET",
-    //     headers: {
-    //         "content-type": "text/plan"
-    //     },
-
-
-    // })
-
-
-
-
-    const novalinha = `
-        <tr>
-            <td> <button class="remover"></button> </td>
-            <td> <div class="input-lembrete"> ${valor} </div> </td>
+    try{
+        const request = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "text/plain"
+            }
             
-        </tr>
 
-    `;
-    $("#descricaoTable").append(novalinha);
+        });
 
-    $(document).on("click", ".remover", function (){
-        $(this).closest("tr").remove();
-    });
+        if(request.ok){
+            console.log("Lembrete deletado com sucesso")
+            $(document).on("click", ".remover", function (){
+            $(this).closest("tr").remove();
+        });
 
-    
+        }
+
+
+
+    }catch(erro){
+        console.log("erro")
+    }
 
 }
+
+async function editReminder(id, obj) {
+    
+}
+
+
 
 
 function cadastrar(){
