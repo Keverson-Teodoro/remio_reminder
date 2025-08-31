@@ -3,6 +3,8 @@ package projetos.kev.remio.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import projetos.kev.remio.DTO.ReminderRequestDto;
@@ -15,7 +17,8 @@ public class ReminderController {
     @Autowired
     ReminderService reminderService;
 
-    public ResponseEntity<?> newReminder(ReminderRequestDto reminder){
+    @PostMapping
+    public ResponseEntity<?> newReminder(@RequestBody ReminderRequestDto reminder){
         try{
             reminderService.newReminder(reminder);
             return ResponseEntity.ok(reminder);
