@@ -22,6 +22,7 @@ public class Reminder {
     @Column(name = "description")
     private String description;
 
+
     public Reminder(String description) {
     }
 }

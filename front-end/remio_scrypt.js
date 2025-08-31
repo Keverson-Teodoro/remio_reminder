@@ -30,46 +30,29 @@
 // }
 
 
-function mostrar(){
-    // const descri = document.getElementById("descricao").value;
-    const value = "asdasdassad".value;
 
-    
+function salvar(){
+       
         const url = "http://localhost:8080/reminder"
-    
-    // $("#descricao").val("");
 
-
+        var description = window.prompt("Novo lembrete");
+        
+        
         try {
         const resposta = fetch(url, {
-            method: "GET",
+            method: "POST",
             headers: {
-                "Content-Type": "text/plain"
+                "Content-Type": "application/json"
             },
-            
+            body: JSON.stringify({
+                description: description
+            })
             
         });
-        
-                    const novalinha = `
-                        <tr>
-                            <td> <button class="remover"></button> </td>
-                            <td> <input class="input-lembrete"> ${resposta} </input> </td>
-                        </tr>
-                
-                    `;
 
-    
-        
-                    $("#descricaoTable").append(novalinha);
-                
-                    $(document).on("click", ".remover", function (){
-                        $(this).closest("tr").remove();
-                    });
-
-                    
-
+            
         if (!resposta.ok) {
-            throw new Error("Não foi possível retornar os dados");
+            throw new Error("Não foi possível salvar o lembrete");
         }
 
         const resultado = resposta.json();
@@ -79,19 +62,71 @@ function mostrar(){
         console.error("Erro:", erro);
     }
 
+}
+
+
+async function mostrar(){
+
+    
+        const url = "http://localhost:8080/reminder"
+    
+    // $("#descricao").val("");
+
+
+        try {
+        const resposta = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "text/plain"
+            }
+        });
     
 
+        if (!resposta.ok) {
+            throw new Error("Não foi possível retornar os dados");
+        }
+
+        const lista = await resposta.json()
+        console.log("Lembretes:", lista);
+
+        $("#descricaoTable").empty();
 
 
+        lista.forEach(element => {
+            const novalinha = `
+            <tr>
+                <td> <button class="remover"></button> </td>
+                <td><input class="input-lembrete" value="${element.description ?? ''}" /></td>
+            </tr>
+                
+        `;
+
+        $("#descricaoTable").append(novalinha);
+    });
+    
+    $(document).on("click", ".remover", function (){
+        $(this).closest("tr").remove();
+    });
+
+
+    } catch (erro) {
+        console.error("Erro:", erro);
+    }
     ;
-
 
 }
 
 window.onload = mostrar;
 
+
+function removeReminder(){
+
+}
+
 function popUp(){
     const valor = window.prompt("digite algo");
+
+
 
     // const endpoint = "http://127.0.1.1:8080/usuarios/to-do-by-descricao";
 

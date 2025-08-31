@@ -1,6 +1,7 @@
 package projetos.kev.remio.service;
 
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projetos.kev.remio.DTO.ReminderRequestDto;
@@ -17,7 +18,10 @@ public class ReminderService {
 
     public void newReminder(ReminderRequestDto reminderRequestDto){
 
-        reminderRepository.save(new Reminder(reminderRequestDto.description()));
+        Reminder reminder = new Reminder();
+        reminder.setDescription(reminderRequestDto.description());
+
+        reminderRepository.save(reminder);
     }
 
 
