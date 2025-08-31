@@ -34,6 +34,18 @@ public class ReminderService {
         reminderRepository.deleteById(id);
     }
 
+    public Reminder editReminder(String id, ReminderRequestDto reminderRequestDto){
+
+        Reminder reminder = reminderRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("Não encontramos esse lembrete na base de dados"));
+
+        reminder.setDescription(reminderRequestDto.description());
+        reminderRepository.save(reminder);
+        return reminder;
+
+
+
+    }
+
 
 
 }

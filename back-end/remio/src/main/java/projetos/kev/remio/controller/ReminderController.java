@@ -43,5 +43,11 @@ public class ReminderController {
     }
 
 
+    @PatchMapping("/{id}")
+    public Reminder editReminder(@PathVariable("id") String id, @RequestBody ReminderRequestDto reminder){
+        return reminderService.editReminder(id, reminder);
+    }
+
+
 
 }
