@@ -30,5 +30,10 @@ public class ReminderService {
     }
 
 
+    public void deleteReminder(String id){
+        reminderRepository.deleteById(id);
+    }
+
+
 
 }
