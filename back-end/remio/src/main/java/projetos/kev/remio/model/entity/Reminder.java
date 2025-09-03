@@ -14,6 +14,7 @@ import lombok.*;
 @ToString
 public class Reminder {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
