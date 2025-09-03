@@ -12,6 +12,8 @@ import projetos.kev.remio.DTO.UserRegisterDTO;
 @RequestMapping("/auth")
 public class AuthController {
 
+
+
     @PostMapping("/register")
     public ResponseEntity<?> register (@RequestBody UserRegisterDTO userRegisterDTO){
         return null;
