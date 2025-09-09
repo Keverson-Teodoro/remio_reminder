@@ -34,24 +34,18 @@ public class SecurityConfiguration {
                 .csrf( csrf -> csrf.disable())
                 .cors( cors -> {})
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .formLogin(form -> form
-
-                        .loginPage("http://192.168.1.20:3002/remio_login_page.html")
-                        .loginProcessingUrl("http://localhost:8088/auth/login")
-
-                )
                 .authorizeHttpRequests( authorize -> {
                     authorize
                             .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
                             .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                            .requestMatchers("/reminder/**").permitAll()
                             .anyRequest().authenticated();
 
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
@@ -60,7 +54,8 @@ public class SecurityConfiguration {
                 "http://192.168.1.20:3011",
                 "http://127.0.0.1:5500",
                 "http://192.168.1.20:3012",
-                "http://192.168.1.20:3013"));
+                "http://192.168.1.20:3013",
+                "http://localhost:8088"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");

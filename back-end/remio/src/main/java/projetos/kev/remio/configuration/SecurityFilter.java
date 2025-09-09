@@ -32,19 +32,40 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if (token != null) {
             var login = tokenService.validationToken(token);
-            UserDetails user = userRepository.findByUsername(login)
-                    .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + login));
+            if (login != null && !login.isBlank()) {
+                UserDetails user = userRepository.findByUsername(login)
+                        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + login));
 
-            var authentication = new UsernamePasswordAuthenticationToken(
+                var authentication = new UsernamePasswordAuthenticationToken(
                         user, null, user.getAuthorities()
                 );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         filterChain.doFilter(request, response);
 
 
     }
+
+//    @Override
+//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+//
+//        var token = this.recoverToken(request);
+//        if (token != null) {
+//            var login = tokenService.validationToken(token);
+//            UserDetails user = userRepository.findByUsername(login)
+//                    .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + login));
+//
+//            var authentication = new UsernamePasswordAuthenticationToken(
+//                        user, null, user.getAuthorities()
+//                );
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        }
+//        filterChain.doFilter(request, response);
+//
+//
+//    }
 
 
 
@@ -54,6 +75,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         if(headerAuth == null){
             return null;
         }
-        return headerAuth.replace("Bearer", "");
+        return headerAuth.replace("Bearer", "").trim();
     }
 }

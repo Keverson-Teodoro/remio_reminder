@@ -3,6 +3,7 @@ package projetos.kev.remio.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import projetos.kev.remio.DTO.ReminderRequestDto;
 import projetos.kev.remio.model.entity.Reminder;
@@ -40,6 +41,11 @@ public class ReminderController {
     @DeleteMapping("/{id}")
     public void deleteRminder (@PathVariable("id") String id){
         reminderService.deleteReminder(id);
+    }
+
+    @GetMapping("/oi")
+    public String teste (){
+        return "asdasdasd";
     }
 
 

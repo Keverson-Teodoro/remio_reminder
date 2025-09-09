@@ -4,6 +4,7 @@ package projetos.kev.remio.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import projetos.kev.remio.DTO.UserRegisterDTO;
 import projetos.kev.remio.model.entity.User;
+import projetos.kev.remio.model.enums.UserRole;
 import projetos.kev.remio.repository.UserRepository;
 
 @Service
@@ -35,6 +37,7 @@ public class UserService implements UserDetailsService {
         User user = new User();
         BeanUtils.copyProperties(userRegisterDTO, user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserRole(UserRole.ADMIN);
         userRepository.save(user);
     }
 
@@ -45,8 +48,8 @@ public class UserService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return userRepository.findByUsername(login)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + login));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
     }
 }
