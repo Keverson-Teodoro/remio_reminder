@@ -24,6 +24,11 @@ public class Reminder {
     private String description;
 
 
+//    @ManyToOne
+//    @JoinColumn(name = "id_user")
+//    private User user;
+
+
     public Reminder(String description) {
     }
 }

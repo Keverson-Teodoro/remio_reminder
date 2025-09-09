@@ -1,4 +1,6 @@
 package projetos.kev.remio.DTO;
 
-public record UserRegisterDTO(String username, String email, String password) {
+import projetos.kev.remio.model.enums.UserRole;
+
+public record UserRegisterDTO(String username, String email, String password, UserRole userRole) {
 }
