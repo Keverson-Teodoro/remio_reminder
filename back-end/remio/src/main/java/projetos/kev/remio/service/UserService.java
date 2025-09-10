@@ -1,6 +1,7 @@
 package projetos.kev.remio.service;
 
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import projetos.kev.remio.DTO.UserRegisterDTO;
 import projetos.kev.remio.model.entity.User;
 import projetos.kev.remio.model.enums.UserRole;
+import projetos.kev.remio.producer.MailProducer;
 import projetos.kev.remio.repository.UserRepository;
 
 @Service
@@ -25,7 +27,12 @@ public class UserService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    MailProducer mailProducer;
 
+
+
+    @Transactional
     public void salvar(UserRegisterDTO userRegisterDTO){
 
         userRepository.findAll().forEach(u -> {
@@ -35,10 +42,13 @@ public class UserService implements UserDetailsService {
         });
 
         User user = new User();
+
         BeanUtils.copyProperties(userRegisterDTO, user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUserRole(UserRole.ADMIN);
+
         userRepository.save(user);
+        mailProducer.welcomeEmail(user);
     }
 
 

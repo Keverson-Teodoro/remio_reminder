@@ -18,6 +18,22 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: qjkjkopp
+  password: 5J7Kwse4et-KHZ6g9WDkn8-QhAZ0CNIY
+  virtual-host: qjkjkopp
+  addresses: amqps://qjkjkopp:5J7Kwse4et-KHZ6g9WDkn8-QhAZ0CNIY@jaragua.lmq.cloudamqp.com/qjkjkopp
+  ssl:
+    enabled: true
+
+
+
+broker:
+  queue:
+    email:
+      name: default-email
 
 
 api:
