@@ -22,18 +22,15 @@ public class MailProducer {
 
     public void welcomeEmail(User user){
 
-        var emailTo = new EmailRequestDTO();
+        EmailRequestDTO emailTo = new EmailRequestDTO();
 
         emailTo.setUserReceiverId(user.getId());
         emailTo.setSubject("Cadastro realizado com sucesso");
-        emailTo.setText("Bem vindo ao remio, " + user.getUsername());
+        emailTo.setText( user.getUsername() + ", Bem vindo ao remio, seu app de lembretes");
         emailTo.setMailTo(user.getEmail());
+    
+        if(emailTo.getMailTo() == null) throw new RuntimeException("Destinatario não pode ser vazio");
 
         rabbitTemplate.convertAndSend("", routenKey, emailTo);
-
     }
-
-
-
-
 }

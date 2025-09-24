@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/remio_app
     username: postgres
-    password: 123456
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -18,22 +18,26 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 
-rabbitmq:
-  host: localhost
-  port: 5672
-  username: qjkjkopp
-  password: 5J7Kwse4et-KHZ6g9WDkn8-QhAZ0CNIY
-  virtual-host: qjkjkopp
-  addresses: amqps://qjkjkopp:5J7Kwse4et-KHZ6g9WDkn8-QhAZ0CNIY@jaragua.lmq.cloudamqp.com/qjkjkopp
-  ssl:
-    enabled: true
+  rabbitmq:
+    virtual-host: qjkjkopp
+    username: qjkjkopp
+    password: GQfxU80cRycrAO9jQL9E9zwPehdCfuPu
+    addresses: amqps://qjkjkopp:GQfxU80cRycrAO9jQL9E9zwPehdCfuPu@jaragua.lmq.cloudamqp.com/qjkjkopp
+    ssl:
+      enabled: true
+
+
+#  rabbitmq:
+#    addresses: amqps://qjkjkopp:GQfxU80cRycrAO9jQL9E9zwPehdCfuPu@jaragua.lmq.cloudamqp.com/qjkjkopp
+#    ssl:
+#      enabled: true
 
 
 
 broker:
   queue:
     email:
-      name: default-email
+      name: remio_queue
 
 
 api:

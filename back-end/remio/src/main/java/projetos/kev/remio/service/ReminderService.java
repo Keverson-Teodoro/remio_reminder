@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projetos.kev.remio.DTO.ReminderRequestDto;
 import projetos.kev.remio.model.entity.Reminder;
+import projetos.kev.remio.model.entity.User;
 import projetos.kev.remio.repository.ReminderRepository;
+import projetos.kev.remio.repository.UserRepository;
 
 import java.util.List;
 
@@ -16,17 +18,29 @@ public class ReminderService {
     @Autowired
     ReminderRepository reminderRepository;
 
-    public void newReminder(ReminderRequestDto reminderRequestDto){
+    @Autowired
+    UserRepository userRepository;
 
+    public void newReminder(ReminderRequestDto reminderRequestDto, String username){
+
+        User user = userRepository.findUserByUsername(username);
         Reminder reminder = new Reminder();
-        reminder.setDescription(reminderRequestDto.description());
+
+        if(user == null) throw new RuntimeException("Usuario não encontrado");
+
+        BeanUtils.copyProperties(reminderRequestDto, reminder);
+        reminder.setUser(user);
 
         reminderRepository.save(reminder);
     }
 
 
-    public List<Reminder> reminderList(){
-        return reminderRepository.findAll();
+    public List<Reminder> reminderList(String username){
+//
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) throw new RuntimeException("Usuário não encontrado");
+
+        return reminderRepository.findByUserId(user.getId());
     }
 
 
@@ -41,9 +55,6 @@ public class ReminderService {
         reminder.setDescription(reminderRequestDto.description());
         reminderRepository.save(reminder);
         return reminder;
-
-
-
     }
 
 

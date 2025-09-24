@@ -13,17 +13,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reminder")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class ReminderController {
 
     @Autowired
     ReminderService reminderService;
 
 
-    @PostMapping
-    public ResponseEntity<?> newReminder(@RequestBody ReminderRequestDto reminder){
+    @PostMapping("/{username}")
+    public ResponseEntity<?> newReminder(@RequestBody ReminderRequestDto reminder, @PathVariable("username") String username){
         try{
-            reminderService.newReminder(reminder);
+            reminderService.newReminder(reminder, username);
             return ResponseEntity.ok(reminder);
 
         }catch (Exception exception){
@@ -32,9 +32,9 @@ public class ReminderController {
     }
 
 
-    @GetMapping
-    public List<Reminder> allReminders(){
-        return reminderService.reminderList();
+    @GetMapping("/{username}")
+    public List<Reminder> allReminders(@PathVariable("username") String username){
+        return reminderService.reminderList(username);
     }
 
 
