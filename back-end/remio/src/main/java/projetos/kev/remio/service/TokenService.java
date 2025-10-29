@@ -16,10 +16,8 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-
     @Value("${api.security.token.secret}")
     private String secret;
-
 
     public String generateToken(User user){
         try{
@@ -34,8 +32,6 @@ public class TokenService {
             throw new RuntimeException(exception.getMessage() + "Não foi possivel criar o token");
         }
     }
-
-
 
     public String validationToken(String token){
 
@@ -52,8 +48,6 @@ public class TokenService {
         }
 
     }
-
-
 
     public Instant generateExpirationDate(){
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));

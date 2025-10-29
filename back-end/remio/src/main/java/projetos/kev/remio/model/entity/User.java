@@ -44,7 +44,8 @@ public class User implements UserDetails {
     @OneToMany
     private List<Reminder> UserReminders;
 
-
+    @Column(name = "forgotPasswordCode")
+    private Integer forgotPasswordCode;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -78,7 +79,4 @@ public class User implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
-//    @Column(name = "user_reminders")
-//    @Type(ListArrayType.class)
-//    private List<Reminder> userReminders;
 }

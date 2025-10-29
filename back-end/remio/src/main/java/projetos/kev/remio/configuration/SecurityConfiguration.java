@@ -36,9 +36,12 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests( authorize -> {
                     authorize
-                            .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
+                            .requestMatchers("/auth/**").permitAll()
                             .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/auth/refreshPassword").permitAll()
+                            .requestMatchers(HttpMethod.POST, "auth/generateVerifyCode").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/auth/teste").permitAll()
                             .anyRequest().authenticated();
 
                 })
@@ -66,10 +69,12 @@ public class SecurityConfiguration {
 
 
 
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(10);
     }
+
 
 
     @Bean

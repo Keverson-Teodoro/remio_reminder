@@ -2,16 +2,18 @@ package projetos.kev.remio.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import projetos.kev.remio.DTO.LoginResponseDTO;
-import projetos.kev.remio.DTO.UserLoginDTO;
-import projetos.kev.remio.DTO.UserRegisterDTO;
+import projetos.kev.remio.DTO.*;
 import projetos.kev.remio.model.entity.User;
+import projetos.kev.remio.service.AuthenticationService;
 import projetos.kev.remio.service.TokenService;
 import projetos.kev.remio.service.UserService;
+
+import java.time.Instant;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,12 +29,22 @@ public class AuthController {
     @Autowired
     TokenService tokenService;
 
+    @Autowired
+    AuthenticationService authenticationService;
 
-    @GetMapping("/teste")
-    public String sasd(){
-        System.out.println("bateu aq");
-        return "asdasd";
+
+    @PostMapping("/refreshPassword")
+    public ResponseEntity<String> refreshPassword(@RequestBody NewPasswordRequestDto newPasswordRequestDto){
+        return authenticationService.refreshPassword(newPasswordRequestDto);
     }
+
+    @PostMapping("/generateVerifyCode")
+    public ResponseEntity<String> generateAndValidadePasswordRefresh(@RequestBody GenerateVerifyCodeDto email){
+        String mail =  email.email();
+        authenticationService.validateNewPasswordRequest(email);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
+
 
 
     @PostMapping("/register")
@@ -50,7 +62,16 @@ public class AuthController {
         var token = tokenService.generateToken((User)auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
+    }
 
+    @DeleteMapping("/id")
+    public void deleteUser(@PathVariable("id") String id){
+        userService.deleteUser(id);
 
+    }
+
+    @GetMapping("/teste")
+    public Instant teste(){
+        return authenticationService.generateCodeExpirateDatee();
     }
 }

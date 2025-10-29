@@ -29,7 +29,8 @@ public class ReminderService {
         if(user == null) throw new RuntimeException("Usuario não encontrado");
 
         BeanUtils.copyProperties(reminderRequestDto, reminder);
-        reminder.setUser(user);
+        user.getUserReminders().add(reminder);
+
 
         reminderRepository.save(reminder);
     }
@@ -40,7 +41,7 @@ public class ReminderService {
         User user = userRepository.findUserByUsername(username);
         if (user == null) throw new RuntimeException("Usuário não encontrado");
 
-        return reminderRepository.findByUserId(user.getId());
+        return user.getUserReminders();
     }
 
 

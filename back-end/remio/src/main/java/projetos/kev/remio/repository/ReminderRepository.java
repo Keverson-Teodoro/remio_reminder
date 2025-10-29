@@ -11,5 +11,5 @@ public interface ReminderRepository extends JpaRepository<Reminder, String> {
 
 
 //    @Query("SELECT r FROM Reminder where r.user_id = :id")
-    List<Reminder> findByUserId(String id);
+//    List<Reminder> findByUserId(String id);
 }

@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import projetos.kev.remio.model.entity.User;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class NewPasswordDto {
+public class NewPasswordRequestDto {
 
-    private String email;
     private Integer code;
+    private String password;
 }

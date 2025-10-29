@@ -23,9 +23,7 @@ public class Reminder {
     @Column(name = "description")
     private String description;
 
-    @JoinColumn(name = "user_id")
-    @ManyToOne
-    private User user;
+
 
 
 
