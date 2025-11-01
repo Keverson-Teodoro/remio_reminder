@@ -36,8 +36,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     VerifyCodeRepository verifyCodeRepository;
 
-
-
     @Transactional
     public void salvar(UserRegisterDTO userRegisterDTO){
 
@@ -68,15 +66,15 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public UserDetails findByUsername(String username){
-        return userRepository.findByUsername(username).orElseThrow( () -> new RuntimeException("Não encontramos"));
+    public UserDetails findByUsername(String email){
+        return userRepository.findByEmail(email).orElseThrow( () -> new RuntimeException("Não encontramos"));
     }
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByUsername(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + email));
     }
 
     public void deleteUser(String id){

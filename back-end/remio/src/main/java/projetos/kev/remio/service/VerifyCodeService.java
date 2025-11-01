@@ -19,7 +19,7 @@ public class VerifyCodeService {
 
     public void saveCode (VerifyCode verifyCode){
 
-        User user = userRepository.findByEmail(verifyCode.getEmail());
+        User user = userRepository.findByEmailUser(verifyCode.getEmail());
         if(user == null) throw new RuntimeException("Usuário não cadastrado");
 
         verifyCodeRepository.save(verifyCode);
