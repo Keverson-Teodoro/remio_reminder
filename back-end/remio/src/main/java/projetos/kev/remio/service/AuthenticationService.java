@@ -83,8 +83,4 @@ public class AuthenticationService {
         return codeGenetaror.nextInt(100000);
     }
 
-    public Instant generateCodeExpirateDate(VerifyCode verifyCode){
-
-        return verifyCode.getSendCodeDate().plusMinutes(3).toInstant(ZoneOffset.of("-03:00"));
-    }
 }

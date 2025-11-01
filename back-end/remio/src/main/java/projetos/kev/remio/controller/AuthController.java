@@ -5,15 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import projetos.kev.remio.DTO.*;
-import projetos.kev.remio.model.entity.User;
 import projetos.kev.remio.service.AuthenticationService;
-import projetos.kev.remio.service.TokenService;
 import projetos.kev.remio.service.UserService;
-
-import java.time.Instant;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,9 +20,6 @@ public class AuthController {
 
     @Autowired
     AuthenticationManager authenticationManager;
-
-    @Autowired
-    TokenService tokenService;
 
     @Autowired
     AuthenticationService authenticationService;
