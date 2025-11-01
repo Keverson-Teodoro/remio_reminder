@@ -8,7 +8,7 @@ import projetos.kev.remio.model.enums.ReminderStatus;
 import javax.print.DocFlavor;
 
 
-@Table(name = "reminders")
+@Table(name = "reminder")
 @Entity
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public class Reminder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
+    @Column(name = "id_reminder")
     private String id;
 
     @Column(name = "description")
@@ -29,7 +29,7 @@ public class Reminder {
     @Enumerated(EnumType.STRING)
     private ReminderStatus status;
 
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "id_user")
     @ManyToOne
     private User user;
 

@@ -37,7 +37,7 @@ public class ReminderService {
         User user = userRepository.findUserByUsername(username);
         if (user == null) throw new RuntimeException("Usuário não encontrado");
 
-        return user.getUserReminders();
+        return reminderRepository.findByUserIdUser(user.getId());
     }
 
 
@@ -59,6 +59,4 @@ public class ReminderService {
         reminderRepository.save(reminder);
         return reminder;
     }
-
-
 }

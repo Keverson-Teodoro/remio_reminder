@@ -1,5 +1,5 @@
 
-function salvar(){
+async function salvar(){
 
         var description = window.prompt("Novo lembrete");
         var token = localStorage.getItem("token");
@@ -10,15 +10,14 @@ function salvar(){
         
         
         try {
-        const resposta = fetch(url, {
+        const resposta = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({
-                description: description
-            })
+            body: JSON.stringify({ description })
+
             
         });
 
@@ -27,8 +26,12 @@ function salvar(){
             throw new Error("Não foi possível salvar o lembrete");
         }
 
-        const resultado = resposta.json();
+        const text = await resposta.text();
+        const resultado = text ? JSON.parse(text) : null;
+
         console.log("Lembretes:", resultado);
+
+        await mostrar();
 
     } catch (erro) {
         console.error("Erro:", erro);
@@ -41,20 +44,8 @@ async function mostrar(){
 
  
         var username = localStorage.getItem("username");
-
         const token = localStorage.getItem("token");
         const url = `http://localhost:8088/reminder/${username}`
-        
-
-        // if(token == null){
-        //     window.location.href = "remio_login_page.html"
-            
-        // }
-
-
-    
-    // $("#descricao").val("");
-
 
         try {           
         const resposta = await fetch(url, {
@@ -68,8 +59,13 @@ async function mostrar(){
         if (!resposta.ok) {
             throw new Error("Não foi possível retornar os dados");
         }
-
-        const lista = await resposta.json()
+        const text = await resposta.text();
+        if (!text) {
+            console.log("Nenhum lembrete encontrado");
+            return;
+        }
+        const lista = JSON.parse(text);
+//        const lista = await resposta.json()
         console.log("Lembretes:", lista);
 
         $("#descricaoTable").empty();
@@ -85,6 +81,8 @@ async function mostrar(){
         `;
 
         $("#descricaoTable").append(novalinha);
+
+
     });
     
 
