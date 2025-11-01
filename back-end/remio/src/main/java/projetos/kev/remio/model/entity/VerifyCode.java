@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Setter
 public class VerifyCode {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -30,6 +29,4 @@ public class VerifyCode {
 
     @Column(name = "id_user")
     private User user;
-
-
 }

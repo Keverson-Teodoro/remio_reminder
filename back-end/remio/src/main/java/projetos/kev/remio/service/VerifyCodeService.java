@@ -16,7 +16,6 @@ public class VerifyCodeService {
     @Autowired
     VerifyCodeRepository verifyCodeRepository;
 
-
     public void saveCode (VerifyCode verifyCode){
 
         User user = userRepository.findByEmail(verifyCode.getEmail());
@@ -24,8 +23,6 @@ public class VerifyCodeService {
 
         verifyCodeRepository.save(verifyCode);
     }
-
-
 
     public VerifyCode validateEmail (VerifyCode verifyCode){
 
@@ -35,7 +32,6 @@ public class VerifyCodeService {
 
 
     }
-
 
     public VerifyCode findByCode(Integer code){
         VerifyCode verifyCode = verifyCodeRepository.findByCode(code);

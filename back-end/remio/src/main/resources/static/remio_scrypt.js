@@ -6,8 +6,6 @@ async function salvar(){
         var username = localStorage.getItem("username");
 
         const url = `http://localhost:8088/reminder/${username}`;
-
-        
         
         try {
         const resposta = await fetch(url, {
@@ -20,8 +18,6 @@ async function salvar(){
 
             
         });
-
-            
         if (!resposta.ok) {
             throw new Error("Não foi possível salvar o lembrete");
         }
@@ -65,7 +61,6 @@ async function mostrar(){
             return;
         }
         const lista = JSON.parse(text);
-//        const lista = await resposta.json()
         console.log("Lembretes:", lista);
 
         $("#descricaoTable").empty();
@@ -94,13 +89,11 @@ async function mostrar(){
 
 }
 
-
 async function removeReminder(id){
 
     const username = localStorage.getItem("username");
     const url = `http://localhost:8088/reminder/${id}/${username}`;
     const token = localStorage.getItem("token")
-
 
     try{
         const request = await fetch(url, {
@@ -120,45 +113,14 @@ async function removeReminder(id){
         });
 
         }
-
-
-
     }catch(erro){
         console.log("erro ao deletar")
         console.log(id)
     }
-
 }
-
-
-async function loginPage(){
-    const url = "localhost:8080/login-view"
-
-
-    try{
-
-        const respsonse = await fetch(url, {
-            method: "GET"
-        })
-
-
-        if(respsonse.ok){
-            console.log("Sucesso")
-        }
-    }catch(erro){
-        console.log("erro")
-    }
-
-
-}
-
-
-
-
 
 async function editReminder(id, description) {
     const url = `http://localhost:8080/reminder/${id}`;
-
 
     try{
         const response = await fetch(url, {
@@ -171,66 +133,6 @@ async function editReminder(id, description) {
     }catch(erro){
         console.log("erro")
     }
-
-    
-}
-
-
-
-async function logar(){
-  
-    const url = "http://localhost:8088/auth/login";
-
-    const username = document.getElementById("username").value
-    const password = document.getElementById("password").value
-
-
-    const authentication = {
-        username: username,
-        password: password
-    };
-
-    try{
-
-        const response = await fetch(url,  {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-
-            
-                
-            },
-            body : JSON.stringify(authentication)
-            
-    
-        })
-
-
-        if(response.ok){
-
-            const data = await response.json();
-            const token = data.token;
-    
-            localStorage.setItem("token", token)
-            localStorage.setItem("username", username)
-            window.location.href = "remio_home_page.html"
-        
-        }
-
-
-
-        
-    }catch(Erro){
-        console.log("erro ao mandar os dados")
-    }
-
-
-
-    // .then((resp) =>  console.log(resp.json))
-    // .catch((erro) => console.log('Deu ruim', erro))
-
-
-
 }
 
 

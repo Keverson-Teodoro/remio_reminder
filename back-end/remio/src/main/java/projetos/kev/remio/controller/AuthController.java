@@ -50,23 +50,9 @@ public class AuthController {
         return ResponseEntity.ok(userRegisterDTO);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<LoginResponseDTO> login(@RequestBody UserLoginDTO userLoginDTO){
-//
-//        var usernameAndPassword = new UsernamePasswordAuthenticationToken(userLoginDTO.username(), userLoginDTO.password());
-//        var auth = this.authenticationManager.authenticate(usernameAndPassword);
-//        var token = tokenService.generateToken((User)auth.getPrincipal());
-//
-//        return ResponseEntity.ok(new LoginResponseDTO(token));
-//    }
-
     @DeleteMapping("/id")
     public void deleteUser(@PathVariable("id") String id){
         userService.deleteUser(id);
     }
 
-    @GetMapping("/teste")
-    public Instant teste(){
-        return authenticationService.generateCodeExpirateDatee();
-    }
 }

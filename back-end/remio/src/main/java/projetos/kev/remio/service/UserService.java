@@ -5,7 +5,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,8 +35,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     VerifyCodeRepository verifyCodeRepository;
 
-
-
     @Transactional
     public void salvar(UserRegisterDTO userRegisterDTO){
 
@@ -57,7 +54,6 @@ public class UserService implements UserDetailsService {
         mailProducer.welcomeEmail(user);
     }
 
-
     public void saveNewUserPassword(NewPasswordRequestDto newPasswordRequestDto){
         VerifyCode verifyCode = verifyCodeRepository.findByCode(newPasswordRequestDto.getCode());
         if(verifyCode == null) throw new RuntimeException("Usuário não cadastrado");
@@ -67,11 +63,9 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-
     public UserDetails findByUsername(String username){
         return userRepository.findByUsername(username).orElseThrow( () -> new RuntimeException("Não encontramos"));
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -82,5 +76,4 @@ public class UserService implements UserDetailsService {
     public void deleteUser(String id){
         userRepository.deleteById(id);
     }
-
 }
