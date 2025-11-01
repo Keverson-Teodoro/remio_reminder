@@ -32,7 +32,6 @@ public class AuthController {
     @Autowired
     AuthenticationService authenticationService;
 
-
     @PostMapping("/refreshPassword")
     public ResponseEntity<String> refreshPassword(@RequestBody NewPasswordRequestDto newPasswordRequestDto){
         return authenticationService.refreshPassword(newPasswordRequestDto);
@@ -45,29 +44,25 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
-
-
     @PostMapping("/register")
     public ResponseEntity<?> register (@RequestBody UserRegisterDTO userRegisterDTO){
         userService.salvar(userRegisterDTO);
         return ResponseEntity.ok(userRegisterDTO);
     }
 
-
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> Login(@RequestBody UserLoginDTO userLoginDTO){
-
-        var usernameAndPassword = new UsernamePasswordAuthenticationToken(userLoginDTO.username(), userLoginDTO.password());
-        var auth = this.authenticationManager.authenticate(usernameAndPassword);
-        var token = tokenService.generateToken((User)auth.getPrincipal());
-
-        return ResponseEntity.ok(new LoginResponseDTO(token));
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<LoginResponseDTO> login(@RequestBody UserLoginDTO userLoginDTO){
+//
+//        var usernameAndPassword = new UsernamePasswordAuthenticationToken(userLoginDTO.username(), userLoginDTO.password());
+//        var auth = this.authenticationManager.authenticate(usernameAndPassword);
+//        var token = tokenService.generateToken((User)auth.getPrincipal());
+//
+//        return ResponseEntity.ok(new LoginResponseDTO(token));
+//    }
 
     @DeleteMapping("/id")
     public void deleteUser(@PathVariable("id") String id){
         userService.deleteUser(id);
-
     }
 
     @GetMapping("/teste")

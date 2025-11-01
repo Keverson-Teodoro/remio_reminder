@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/remio_scrypt.js}"></script>
+
+    <style>
+
+
+        .salvar{
+            align-content: center;
+            color: rgb(255, 255, 255);
+            background-color: rgb(197, 0, 99);
+            width: 20%; ;
+            height: 20%;
+            border-radius: 5px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+        }
+
+
+        h1{
+            align-items: center;
+            align-content: center;
+            align-self: center;
+            justify-content: center;
+            display: flex;
+        }
+
+        .divzona{
+            align-items: center;
+            align-content: center;
+            align-self: center;
+            justify-content: center;
+            display: flex;
+            border: none;
+
+
+        }
+
+        .remover{
+            background-color: rgb(17, 17, 17);
+            width: 30px; ;
+            height: 30px;
+            border-radius: 20px;
+            display: flex;
+
+        }
+
+        .campoDescricao{
+            align-items: center;
+            align-content: center;
+            align-self: center;
+            justify-content: center;
+            display: flex;
+            margin-left: -110px;
+            margin-top: 10px;
+
+
+
+        }
+
+
+        .criar{
+
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            border: none;
+
+            /* Fixo no canto inferior direito */
+            position: fixed;
+            bottom: 20px;  /* distância do fundo */
+            right: 20px;   /* distância da direita */
+            z-index: 9999; /* fica acima de tudo */
+
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+
+            /* background-color: black;
+            color: white;
+            border-radius: 30px;
+            width: 17%;
+            max-width: 6000px;
+            height: 60px;
+            margin-top: 500px;
+            margin-left: 290px;
+            border: none;
+            position: fixed;
+            z-index: 9999; */
+
+
+
+        }
+
+        .criar:hover{
+            background-color: rgb(65, 65, 65);
+        }
+
+        body{
+            background-color: rgb(17, 17, 17);
+            border: none;
+        }
+
+
+        .main{
+            border: none;
+        }
+
+
+        input{
+            background-color: rgb(17, 17, 17);
+            border: none;
+            outline: none;
+            color: white;
+            width: 100px;
+            height: 100px;
+        }
+        table{
+            color: rgb(255, 255, 255);
+            margin-left: -40px;
+            margin-top: 20px;
+        }
+
+        .nome{
+            background-color: #3d3d3d;
+            color: rgb(255, 255, 255);
+            border-radius: 10px;
+            width: 86%;
+            /* width: 50%;
+            max-width: 60000px; */
+            height: 70px;
+            font-size: 16px;
+            outline: none;
+            display: flex;
+        }
+
+        .email{
+
+            background-color: #3d3d3d;
+            color: rgb(255, 255, 255);
+            border-radius: 10px;
+            width: 86%;
+            /* width: 50%;
+            max-width: 60000px; */
+            height: 70px;
+            font-size: 16px;
+            outline: none;
+            display: flex;
+
+
+        }
+
+        .senha{
+
+            background-color: #3d3d3d;
+            color: rgb(255, 255, 255);
+            border-radius: 10px;
+            width: 86%;
+            /* width: 50%;
+            max-width: 60000px; */
+            height: 70px;
+            font-size: 16px;
+            outline: none;
+            display: flex;
+
+
+        }
+
+        .campos-cadastro{
+
+
+            margin-top: 40px;
+            margin-left: -30px;
+            margin-top: 250px;
+
+
+
+        }
+
+        .campos-cadastro input{
+            margin: 40px;
+        }
+
+        .campos-cadastro p{
+            color: white;
+
+        }
+
+
+
+        .cadastrar{
+            /* background-color: #01d4a0; */
+            background-color: rgb(199, 4, 199);
+            color: rgb(255, 255, 255);
+            border-radius: 10px;
+            align-items: center;
+            width: 86.4%;
+            /* width: 1000%; */
+
+
+            height: 70px;
+            font-size: 16px;
+            outline: none;
+
+            margin: 4px;
+            margin-left: 40px;
+
+        }
+
+        .cadastrar :hover{
+            background-color: #03ad83;
+
+        }
+
+        .texto-cadastro{
+            position: absolute;
+            color: white;
+            height: 20px;
+            margin-top: -120px;
+            margin-left: 11%;
+            position: fixed;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+        }
+
+
+        a{
+            margin-left: 325px;
+            color: rgb(255, 255, 255);
+
+        }
+
+        .lembretes{
+            background-color: #171717;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            position: fixed;
+            z-index: 9999;
+            left: 40px;
+            color: white;
+            font-size: 25px;
+
+        }
+
+        .input-lembrete{
+            background-color: rgb(17, 17, 17);
+            border: none;
+            outline: none;
+            color: white;
+            width: 100px;
+            height: 100px;
+        }
+
+
+        .geralCaixa{
+            background-color: #171717;
+        }
+
+        /* .container-principal{
+            /* align-self: center;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            justify-self: center;
+            justify-items: center; */
+            /* margin-left: 50%;
+            margin-right: 50%;
+        }*/
+    </style>
+</head>
+<body>
+
+    
+
+    <div class="main">
+        <br>
+        <div class="divzona">
+        </div>
+
+        <br>
+        <br>
+
+        <h1 class="lembretes">Lembretes</h1>
+
+        <div class="campoDescricao">
+            <div class="campo_dois">
+                <table id="tabelaDescricao" class="tabelaDescricao_atualizada">
+                    <thead>
+                        <tr>
+                            <th class="msg"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="descricaoTable">
+                        
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="criar" onClick="salvar()"> + </button>
+</body>
+</html>

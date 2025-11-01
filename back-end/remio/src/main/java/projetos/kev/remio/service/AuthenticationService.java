@@ -88,12 +88,10 @@ public class AuthenticationService {
     public Instant generateCodeExpirateDate(VerifyCode verifyCode){
 
         return verifyCode.getSendCodeDate().plusMinutes(3).toInstant(ZoneOffset.of("-03:00"));
-
     }
 
     public Instant generateCodeExpirateDatee(){
 
         return LocalDateTime.now().plusMinutes(3).toInstant(ZoneOffset.of("-03:00"));
-
     }
 }

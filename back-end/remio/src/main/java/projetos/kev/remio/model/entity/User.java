@@ -40,9 +40,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    @Column(name = "user_todos")
-    @OneToMany
-    private List<Reminder> UserReminders;
 
     @Column(name = "forgotPasswordCode")
     private Integer forgotPasswordCode;

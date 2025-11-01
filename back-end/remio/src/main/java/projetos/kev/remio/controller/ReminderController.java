@@ -38,9 +38,9 @@ public class ReminderController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public void deleteRminder (@PathVariable("id") String id){
-        reminderService.deleteReminder(id);
+    @DeleteMapping("/{id}/{username}")
+    public void deleteRminder (@PathVariable("id") String id, @PathVariable("username") String username){
+        reminderService.deleteReminder(id, username);
     }
 
     @GetMapping("/oi")
