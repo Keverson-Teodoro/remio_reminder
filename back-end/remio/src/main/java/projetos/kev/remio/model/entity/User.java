@@ -40,7 +40,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-
     @Column(name = "forgotPasswordCode")
     private Integer forgotPasswordCode;
 
