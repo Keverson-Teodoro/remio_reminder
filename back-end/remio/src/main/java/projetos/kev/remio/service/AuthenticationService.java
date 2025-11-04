@@ -1,39 +1,43 @@
 package projetos.kev.remio.service;
 
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import projetos.kev.remio.DTO.GenerateVerifyCodeDto;
 import projetos.kev.remio.DTO.NewPasswordRequestDto;
 import projetos.kev.remio.model.entity.User;
 import projetos.kev.remio.model.entity.VerifyCode;
 import projetos.kev.remio.repository.UserRepository;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
 public class AuthenticationService {
 
     @Autowired
-    UserRepository userRepository;
-
+    private UserRepository userRepository;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Value("${api.security.token.secret}")
     private String secret;
 
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
     @Value("${spring.mail.username}")
     private String mailFrom;
@@ -41,7 +45,10 @@ public class AuthenticationService {
     private JavaMailSender javaMailSender;
 
     @Autowired
-    VerifyCodeService verifyCodeService;
+    private Configuration freMakerConfig;
+
+    @Autowired
+    private VerifyCodeService verifyCodeService;
 
     public AuthenticationService (JavaMailSender javaMailSender){
         this.javaMailSender = javaMailSender;
@@ -53,34 +60,46 @@ public class AuthenticationService {
         return ResponseEntity.ok().build();
     }
 
-    public Integer validateNewPasswordRequest(GenerateVerifyCodeDto generateVerifyCodeDto){
+    public ResponseEntity<String> validateNewPasswordRequest(GenerateVerifyCodeDto generateVerifyCodeDto) throws Exception{
         User user = userRepository.findByEmail(generateVerifyCodeDto.email());
-        if(user == null) throw new RuntimeException("Usuario não possui conta");
+        if(user == null) throw new RuntimeException("Usuário não possui conta");
 
         Integer code = generateRecoverPasswordCode();
 
-        SimpleMailMessage message = new SimpleMailMessage();
+        Map<String, Object> model = new HashMap<>();
+        model.put("codigo", code);
 
-        message.setSubject("Redefinição de senha");
-        message.setText("Código: " + code);
-        message.setTo(user.getEmail());
-        message.setFrom(mailFrom);
-        javaMailSender.send(message);
+        try {
+            Template template = freMakerConfig.getTemplate("recuperar_senha_template.ftl");
+            String emailContent = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
-        VerifyCode verifyCode = new VerifyCode();
-        verifyCode.setCode(code);
-        verifyCode.setEmail(user.getEmail());
-        verifyCode.setUser(user);
-        verifyCode.setSendCodeDate(LocalDateTime.now());
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        verifyCodeService.saveCode(verifyCode);
-        return code;
+            helper.setText(emailContent, true);
+            helper.setTo(user.getEmail());
+            helper.setSubject("Redefinição de senha");
+            helper.setFrom(mailFrom);
 
+            javaMailSender.send(message);
+
+            VerifyCode verifyCode = new VerifyCode();
+            verifyCode.setCode(code);
+            verifyCode.setEmail(user.getEmail());
+            verifyCode.setUser(user);
+            verifyCode.setSendCodeDate(LocalDateTime.now());
+
+            verifyCodeService.saveCode(verifyCode);
+            return ResponseEntity.ok("Email enviado com sucesso!");
+
+        }catch (MailException exception) {
+            return ResponseEntity.internalServerError().body("Não foi possivel enviar o email");
+        }
     }
 
     public Integer generateRecoverPasswordCode(){
         Random codeGenetaror = new Random();
-        return codeGenetaror.nextInt(100000);
+        return codeGenetaror.nextInt(1000);
     }
 
 }

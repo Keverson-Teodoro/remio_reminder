@@ -135,6 +135,35 @@ async function editReminder(id, description) {
     }
 }
 
+async function recoverPassword(){
+    var email = window.prompt("Digite seu email: ");
+    const url = "http://localhost:8088/auth/generateVerifyCode";
+    const obj = {email : email};
+
+    try{
+
+        const response = await fetch (url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(obj)
+        });
+
+        const text = await response.text();
+
+
+        if (!text) {
+            console.log("Não foi possivel envsiar email.")
+        } else {
+            console.log ("Email enviado com sucesso.")
+        }
+    }catch(erro){
+        console.log("Conexão falhou.")
+    }
+
+}
+
 
 
 

@@ -1,6 +1,8 @@
 package projetos.kev.remio.producer;
 
 
+import freemarker.template.Template;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,12 +10,15 @@ import org.springframework.stereotype.Component;
 import projetos.kev.remio.DTO.EmailRequestDTO;
 import projetos.kev.remio.model.entity.User;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Component
+@RequiredArgsConstructor
 public class MailProducer {
 
-    @Autowired
-    RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     @Value("${broker.queue.email.name}")
     private String routenKey;
@@ -23,6 +28,9 @@ public class MailProducer {
     public void welcomeEmail(User user){
 
         EmailRequestDTO emailTo = new EmailRequestDTO();
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("nome", user.getUsername());
 
         emailTo.setUserReceiverId(user.getId());
         emailTo.setSubject("Cadastro realizado com sucesso");

@@ -29,11 +29,15 @@ public class AuthController {
         return authenticationService.refreshPassword(newPasswordRequestDto);
     }
 
+    @PostMapping("/verifyCode")
+    public ResponseEntity<String> verifyCode (@RequestBody CodeVerifyDTO verifyDTO){
+        return null;
+    }
+
     @PostMapping("/generateVerifyCode")
-    public ResponseEntity<String> generateAndValidadePasswordRefresh(@RequestBody GenerateVerifyCodeDto email){
+    public ResponseEntity<String> generateAndValidadePasswordRefresh(@RequestBody GenerateVerifyCodeDto email) throws Exception {
         String mail =  email.email();
-        authenticationService.validateNewPasswordRequest(email);
-        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        return authenticationService.validateNewPasswordRequest(email);
     }
 
     @PostMapping("/register")
