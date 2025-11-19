@@ -2,10 +2,11 @@ package projetos.kev.remio.model.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import projetos.kev.remio.model.enums.ReminderStatus;
-
-import javax.print.DocFlavor;
 
 
 @Table(name = "reminder")
