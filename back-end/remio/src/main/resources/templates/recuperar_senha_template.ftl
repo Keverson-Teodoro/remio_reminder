@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Código</title>
 </head>
-<body style="margin:0; padding:0; background-color:#000000; width:100%; height:100%;">
+<body style="margin:0; padding:0; width:100%; height:100%;">
 
     <table role="presentation" width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"
         style="border-collapse:collapse; width:100%; height:100%;">
@@ -27,8 +27,7 @@
                     </tr>
                 </table>
 
-                <!-- Mensagem central -->
-                <table cellpadding="0" cellspacing="0" border="0" 
+                <table cellpadding="0" cellspacing="0" border="0"
                        style="margin-top:120px; text-align:center;">
                     <tr>
                         <td align="center">
@@ -43,7 +42,6 @@
                     </tr>
                 </table>
 
-                <!-- Retângulo com o código -->
                 <table cellpadding="0" cellspacing="0" border="0" style="margin-top:40px;">
                     <tr>
                         <td align="center">
@@ -64,8 +62,7 @@
                     </tr>
                 </table>
 
-                <!-- Faixa inferior -->
-                <table width="100%" cellpadding="0" cellspacing="0" border="0" 
+                <table width="100%" cellpadding="0" cellspacing="0" border="0"
                        style="border-collapse:collapse; background-color:#5e17eb; height:100px; margin-top:435px;">
                     <tr>
                         <td>&nbsp;</td>

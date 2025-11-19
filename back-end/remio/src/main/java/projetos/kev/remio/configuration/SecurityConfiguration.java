@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                             .requestMatchers("/login-view").permitAll()
                             .requestMatchers("/login").permitAll()
                             .requestMatchers("/newPassword-view").permitAll()
+                            .requestMatchers("/verificarCodigo").permitAll()
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))

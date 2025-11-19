@@ -4,8 +4,11 @@ package projetos.kev.remio.service;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,10 +22,10 @@ import projetos.kev.remio.model.entity.User;
 import projetos.kev.remio.model.entity.VerifyCode;
 import projetos.kev.remio.repository.UserRepository;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 @Service
 public class AuthenticationService {
@@ -56,13 +59,15 @@ public class AuthenticationService {
 
     public ResponseEntity<String> refreshPassword(NewPasswordRequestDto newPasswordRequestDto){
 
-        userService.saveNewUserPassword(newPasswordRequestDto);
+        userService.saveNewUserPassword(newPasswordRequestDto, newPasswordRequestDto.getCode());
         return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<String> validateNewPasswordRequest(GenerateVerifyCodeDto generateVerifyCodeDto) throws Exception{
         User user = userRepository.findByEmail(generateVerifyCodeDto.email());
-        if(user == null) throw new RuntimeException("Usuário não possui conta");
+        if(user == null) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("Usuário não possui email cadastrado.");
+        };
 
         Integer code = generateRecoverPasswordCode();
 
@@ -98,8 +103,8 @@ public class AuthenticationService {
     }
 
     public Integer generateRecoverPasswordCode(){
-        Random codeGenetaror = new Random();
-        return codeGenetaror.nextInt(1000);
+        SecureRandom codeGenetaror = new SecureRandom();
+        return codeGenetaror.nextInt(999999);
     }
 
 }

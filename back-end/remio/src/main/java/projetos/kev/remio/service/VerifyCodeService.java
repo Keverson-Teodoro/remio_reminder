@@ -1,6 +1,7 @@
 package projetos.kev.remio.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import projetos.kev.remio.DTO.CodeVerifyDTO;
 import projetos.kev.remio.model.entity.User;
@@ -25,8 +26,14 @@ public class VerifyCodeService {
         verifyCodeRepository.save(verifyCode);
     }
 
-    public void verifyCode (CodeVerifyDTO codeVerifyDTO){
+    public ResponseEntity<String> verifyCode (CodeVerifyDTO codeVerifyDTO){
         var code = verifyCodeRepository.findByCode(codeVerifyDTO.code());
-        if (code != null) throw new RuntimeException("Código invalido");
+        if (code == null) return ResponseEntity.badRequest().body("Código inválido");
+        return ResponseEntity.ok("Código válido.");
+
+    }
+
+    public User findUserByCode (Integer code){
+        return verifyCodeRepository.findUserByCode(code);
     }
 }

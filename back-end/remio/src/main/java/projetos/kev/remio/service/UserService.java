@@ -54,12 +54,14 @@ public class UserService implements UserDetailsService {
         mailProducer.welcomeEmail(user);
     }
 
-    public void saveNewUserPassword(NewPasswordRequestDto newPasswordRequestDto){
-        VerifyCode verifyCode = verifyCodeRepository.findByCode(newPasswordRequestDto.getCode());
+    public void saveNewUserPassword(NewPasswordRequestDto newPasswordRequestDto, Integer code){
+        System.out.println(newPasswordRequestDto.getPassword());
+        VerifyCode verifyCode = verifyCodeRepository.findByCode(code );
         if(verifyCode == null) throw new RuntimeException("Usuário não cadastrado");
 
         User user = verifyCode.getUser();
         user.setPassword(passwordEncoder.encode(newPasswordRequestDto.getPassword()));
+        verifyCodeRepository.delete(verifyCode);
         userRepository.save(user);
     }
 

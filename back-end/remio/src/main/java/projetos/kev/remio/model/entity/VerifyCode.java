@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "verify_code")
 public class VerifyCode {
 
     @Id
@@ -27,6 +29,7 @@ public class VerifyCode {
     @Column(name = "code_send_date")
     private LocalDateTime sendCodeDate;
 
-    @Column(name = "id_user")
+    @JoinColumn(name = "id_user")
+    @ManyToOne
     private User user;
 }

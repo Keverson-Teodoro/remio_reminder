@@ -74,14 +74,8 @@ async function mostrar(){
             </tr>
                 
         `;
-
         $("#descricaoTable").append(novalinha);
-
-
     });
-    
-
-
     } catch (erro) {
         console.error("Erro:", erro);
     }
@@ -102,7 +96,7 @@ async function removeReminder(id){
                 "Content-Type": "text/plain",
                 "Authorization": `Bearer ${token}`
             }
-            
+
 
         });
 
@@ -135,7 +129,7 @@ async function editReminder(id, description) {
     }
 }
 
-async function recoverPassword(){
+async function recoverPassword (){
     var email = window.prompt("Digite seu email: ");
     const url = "http://localhost:8088/auth/generateVerifyCode";
     const obj = {email : email};
@@ -150,19 +144,58 @@ async function recoverPassword(){
             body: JSON.stringify(obj)
         });
 
-        const text = await response.text();
-
-
-        if (!text) {
-            console.log("Não foi possivel envsiar email.")
-        } else {
+        if (!response.ok) {
+            window.alert("Não foi possível enviar o email." + response.text)
+        }
+        else {
             console.log ("Email enviado com sucesso.")
+            window.location.href = "http://localhost:8088/newPassword-view";
         }
     }catch(erro){
         console.log("Conexão falhou.")
     }
-
 }
+
+
+async function refreshPassword() {
+
+    const codeNumber = document.getElementById("code").value;
+    const passwordPass = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    const obj = { code: codeNumber, password: String(passwordPass) };
+    const url = "http://localhost:8088/auth/refreshPassword";
+
+    if(passwordPass !== confirmPassword) {
+        window.alert("Senhas diferentes");
+        return;
+    }
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(obj)
+        });
+
+        if (response.ok) {
+            window.alert("Senha redefinida com sucesso!");
+            window.location.href = "http://localhost:8088/login-view"
+
+
+            console.log("caiu")
+        } else {
+            window.alert("Erro ao redefinir senha");
+            console.log("não caiu")
+        }
+
+    } catch (erro) {
+        window.alert("Não foi possível verificar o código");
+    }
+}
+
 
 
 

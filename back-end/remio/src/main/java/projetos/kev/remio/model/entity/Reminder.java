@@ -16,7 +16,6 @@ import javax.print.DocFlavor;
 @ToString
 public class Reminder {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_reminder")
