@@ -2,14 +2,11 @@ package projetos.kev.email_remio_ms.service;
 
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import projetos.kev.email_remio_ms.DTO.EmailRequestDTO;
 import projetos.kev.email_remio_ms.model.entity.EmailModel;
 import projetos.kev.email_remio_ms.repository.EmailRepository;
 

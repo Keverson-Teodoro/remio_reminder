@@ -5,12 +5,15 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/remio_app
     username: postgres
-    password: 123456
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: update
 
   rabbitmq:
+    virtual-host: qjkjkopp
+    username: qjkjkopp
+    password: GQfxU80cRycrAO9jQL9E9zwPehdCfuPu
     addresses: amqps://qjkjkopp:GQfxU80cRycrAO9jQL9E9zwPehdCfuPu@jaragua.lmq.cloudamqp.com/qjkjkopp
     ssl:
       enabled: true
@@ -32,4 +35,4 @@ spring:
 broker:
   queue:
     email:
-      name: default.email
+      name: remio_queue

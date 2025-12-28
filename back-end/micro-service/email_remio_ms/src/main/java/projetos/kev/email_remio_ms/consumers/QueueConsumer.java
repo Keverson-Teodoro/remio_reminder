@@ -2,11 +2,7 @@ package projetos.kev.email_remio_ms.consumers;
 
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.annotation.RabbitListeners;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import projetos.kev.email_remio_ms.DTO.EmailRequestDTO;
@@ -22,6 +18,8 @@ public class QueueConsumer {
 
     @RabbitListener(queues = "${broker.queue.email.name}")
     public void queueListener(@Payload EmailRequestDTO emailDTO){
+
+        System.out.println(emailDTO);
 
         var email = new EmailModel();
         email.setEmailTo(emailDTO.mailTo());

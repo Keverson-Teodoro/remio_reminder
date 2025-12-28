@@ -48,9 +48,4 @@ public class AuthController {
         return ResponseEntity.ok(userRegisterDTO);
     }
 
-    @DeleteMapping("/id")
-    public void deleteUser(@PathVariable("id") String id){
-        userService.deleteUser(id);
-    }
-
 }
